@@ -12,7 +12,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler,\
 
 
 NAME = "chatsky_test_2bot"
-API = "660506337:AAG6LsMsWl1UvnrasIiN8cJgSW9ni7fo3kA"
+API = "679438266:AAEQdDfMG96UvvO2BzGA9ttJKzG7NCp2sMA"
 PROXY = {'proxy_url': 'socks5://163.172.152.192:1080'}
 
 admin_id = 0
@@ -33,10 +33,12 @@ def get_passinfo(directory):
 def start(bot, update):
     greetings = """Привет, юзер!
 Я ВрачБот, помогу тебе предупредить проблемы со здоровьем!
-Чтобы начать разговор со мной, введи команду /login
+Чтобы начать работу со мной, введи команду /login
 Чтобы увидеть список моих комманд, напиши /help"""
 
     bot.send_message(chat_id=update.message.chat_id, text=greetings)
+
+    main_menu(bot, update)
 
 
 def login(bot, update, args):
@@ -66,7 +68,7 @@ def login(bot, update, args):
 def main_menu(bot, update):
     keyboard =[
         [InlineKeyboardButton("Тест мозговой активности", callback_data="brain_test"),
-         InlineKeyboardButton("Второй тест", callback_data="test2")]
+         InlineKeyboardButton("Тест на ваше питание", callback_data="test2")]
     ]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
@@ -115,7 +117,7 @@ if __name__ == "__main__":
 
     login_, password_ = get_passinfo("passinfo.txt")
 
-    updater = Updater(token=API)
+    updater = Updater(token=API, request_kwargs=PROXY)
     dispatcher = updater.dispatcher
 
     test_handlers = []
